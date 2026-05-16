@@ -1,0 +1,231 @@
+// 1. feladat
+db.mechanics.aggregate([
+  {
+    $project: {
+      _id: 0,
+      fullName: { $concat: ["$first_name", " ", "$last_name"] },
+      currentSalary: "$salary.current"
+    }
+  },
+  {
+    $sort: { currentSalary: -1 }
+  }
+]);
+
+// 2. feladat
+db.jobs.aggregate([
+  {
+    $group: {
+      _id: "$mechanic.name",
+      jobsDone: { $sum: 1 }
+    }
+  },
+  {
+    $sort: { jobsDone: -1 }
+  }
+]);
+
+// 3. feladat
+db.jobs.aggregate([
+  {
+    $group: {
+      _id: "$operation.description",
+      cost: { $first: "$operation.cost" }
+    }
+  },
+  {
+    $sort: { cost: -1 }
+  },
+  {
+    $limit: 3
+  },
+  {
+    $project: {
+      _id: 0,
+      operation: "$_id",
+      cost: 1
+    }
+  }
+]);
+
+// 4. feladat
+db.parts.find(
+  { quantity: 0 },
+  { _id: 0, name: 1 }
+);
+
+// 5. feladat
+db.cars.aggregate([
+  {
+    $group: {
+      _id: "$fuel_type",
+      count: { $sum: 1 }
+    }
+  },
+  {
+    $sort: { count: -1 }
+  },
+  {
+    $limit: 1
+  },
+  {
+    $lookup: {
+      from: "reference_data",
+      let: { code: "$_id" },
+      pipeline: [
+        { $unwind: "$fuel_types" },
+        { $match: { $expr: { $eq: ["$fuel_types.code", "$$code"] } } }
+      ],
+      as: "fuelInfo"
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      fuelType: { $first: "$fuelInfo.fuel_types.name" },
+      numberOfCars: "$count"
+    }
+  }
+]);
+
+// 6. feladat
+db.jobs.find(
+  {
+    "field_job.distance": { $gt: 100 }
+  },
+  {
+    _id: 0,
+    mechanicName: "$mechanic.name",
+    address: "$field_job.address",
+    distance: "$field_job.distance",
+    travelCost: "$field_job.travel_cost"
+  }
+);
+
+// 7. feladat
+db.mechanics.aggregate([
+  {
+    $lookup: {
+      from: "jobs",
+      let: { mechId: "$_id" },
+      pipeline: [
+        { $match: { $expr: { $eq: ["$mechanic.id_ref", "$$mechId"] } } },
+        { $match: { "field_job": { $exists: true } } },
+        { $limit: 1 }
+      ],
+      as: "hasFieldJob"
+    }
+  },
+  {
+    $match: { "hasFieldJob": { $size: 0 } }
+  },
+  {
+    $project: {
+      _id: 0,
+      name: { $concat: ["$first_name", " ", "$last_name"] }
+    }
+  }
+]);
+
+// 8. feladat
+db.jobs.aggregate([
+  {
+    $match: {
+      scheduled_date: {
+        $gte: new Date("2024-03-01"),
+        $lt: new Date("2024-04-01")
+      }
+    }
+  },
+  {
+    $group: {
+      _id: "$mechanic.name",
+      totalIncome: {
+        $sum: {
+          $add: [
+            "$operation.cost",
+            { $ifNull: ["$field_job.travel_cost", 0] }
+          ]
+        }
+      },
+      jobsCount: { $sum: 1 }
+    }
+  },
+  {
+    $sort: { totalIncome: -1 }
+  },
+  {
+    $project: {
+      _id: 0,
+      mechanic: "$_id",
+      totalIncome: 1,
+      jobsCount: 1
+    }
+  }
+]);
+
+// 9. feladat
+db.orders.aggregate([
+  {
+    $unwind: "$items"
+  },
+  {
+    $group: {
+      _id: "$items.part_name",
+      orderCount: { $sum: 1 }
+    }
+  },
+  {
+    $sort: { orderCount: -1 }
+  },
+  {
+    $limit: 3
+  },
+  {
+    $project: {
+      _id: 0,
+      partName: "$_id",
+      timesOrdered: "$orderCount"
+    }
+  }
+]);
+
+// 10. feladat
+db.jobs.aggregate([
+  {
+    $group: {
+      _id: "$vehicle.plate",
+      jobCount: { $sum: 1 }
+    }
+  },
+  {
+    $lookup: {
+      from: "cars",
+      localField: "_id",
+      foreignField: "plate_number",
+      as: "carInfo"
+    }
+  },
+  {
+    $unwind: "$carInfo"
+  },
+  {
+    $group: {
+      _id: "$carInfo.owner_name",
+      totalJobs: { $sum: "$jobCount" }
+    }
+  },
+  {
+    $sort: { totalJobs: -1 }
+  },
+  {
+    $limit: 1
+  },
+  {
+    $project: {
+      _id: 0,
+      customerName: "$_id",
+      totalJobs: 1
+    }
+  }
+]);
