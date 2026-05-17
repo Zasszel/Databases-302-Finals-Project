@@ -1,6 +1,6 @@
 alter session set "_ORACLE_SCRIPT" = TRUE;
 
-alter user szamt28 identified by piros5;
+alter user SZAMT14 identified by Sapi1234;
 
 create table salaries (
     salary_id number primary key,
@@ -14,13 +14,14 @@ create table salaries (
 
 create table mechanics (
     mechanic_id number GENERATED ALWAYS AS IDENTITY primary key,
+    salary_id number, -- ÚJ OSZLOP AZ IDEGEN KULCSNAK!
     last_name varchar2(100),
     first_name varchar2(100),
     address varchar2(100),
     email varchar2(100) unique,
     tel varchar2(10) unique check (REGEXP_LIKE(tel, '^\d{10}$')),
     hire_date date,
-    constraint fk_salaries foreign key (mechanic_id) references salaries(salary_id)
+    constraint fk_salaries foreign key (salary_id) references salaries(salary_id)
 );
 
 ---
@@ -74,7 +75,6 @@ create table operations (
 ---
 
 create table orders (
-
     order_id number generated always as identity primary key,
     order_date date,
     distributor varchar2(100),
@@ -88,7 +88,7 @@ create table parts (
     part_id number generated always as identity primary key,
     name varchar2 (20),
     description varchar2(1000),
-    quantity number 
+    quantity number
 );
 
 ---
@@ -99,7 +99,7 @@ create table parts_orders (
     primary key (part_id, order_id),
     constraint fk_parts foreign key (part_id) references parts(part_id),
     constraint fk_orders foreign key (order_id) references orders(order_id)
-); 
+);
 
 ---
 
@@ -126,13 +126,13 @@ create table jobs (
     mechanic_id number,
     op_id number,
     field_job_id number default null,
+    calendar_id number, -- ÚJ OSZLOP AZ IDEGEN KULCSNAK!
     constraint fk_cars_jobs foreign key (car_id) references cars(car_id),
     constraint fk_mechanics_jobs foreign key (mechanic_id) references mechanics(mechanic_id),
     constraint fk_operations_jobs foreign key (op_id) references operations(op_id),
-    constraint fk_calendars_jobs foreign key (job_id) references calendars(calendar_id),
+    constraint fk_calendars_jobs foreign key (calendar_id) references calendars(calendar_id), -- JAVÍTOTT HIVATKOZÁS!
     constraint fk_field_job_id_jobs foreign key (field_job_id) references field_jobs(field_job_id)
 );
-
 
 ---
 
@@ -142,7 +142,7 @@ create table parts_used (
     primary key (part_id, job_id),
     constraint fk_parts_parts_used foreign key (part_id) references parts(part_id),
     constraint fk_jobs_parts_used foreign key (job_id) references jobs(job_id)
-); 
+);
 
 
 

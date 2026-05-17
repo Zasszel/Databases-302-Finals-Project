@@ -1,0 +1,11 @@
+TRUNCATE TABLE parts_used;
+TRUNCATE TABLE jobs;
+TRUNCATE TABLE parts_orders;
+TRUNCATE TABLE cars;
+TRUNCATE TABLE field_jobs;
+TRUNCATE TABLE orders;
+TRUNCATE TABLE parts;
+TRUNCATE TABLE operations;
+TRUNCATE TABLE mechanics;
+TRUNCATE TABLE customers;
+TRUNCATE TABLE fuel_type_codes;

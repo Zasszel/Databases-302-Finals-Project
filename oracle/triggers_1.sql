@@ -1,15 +1,15 @@
 create or replace trigger trg_mechanics_salaries
 after insert on mechanics
 for each row
-declare 
+declare
     new_starting_salary number  ;
 begin
-    
+
     new_starting_salary := 1200 + trunc(dbms_random.value(0, 1801));
 
     insert into salaries (salary_id, starting_salary, current_salary, bonuses, increase)
     values (:NEW.mechanic_id, new_starting_salary, new_starting_salary, 0, 0);
-    
+
 end;
 
 drop trigger trg_mechanics_salaries;
@@ -18,10 +18,10 @@ drop trigger trg_mechanics_salaries;
 create or replace trigger set_calendar
 after insert on jobs
 for each row
-declare 
+declare
     rand_date date;
 begin
-    
+
     rand_date := TO_DATE('2024-01-01', 'YYYY-MM-DD') + ROUND(DBMS_RANDOM.VALUE(0, 365));
 
     insert into calendars (calendar_id, in_date, out_date)
@@ -37,7 +37,7 @@ for each row
 begin
     update parts
     set quantity = quantity - 1
-    where part_id = :NEW.part_id 
+    where part_id = :NEW.part_id
             and quantity > 0;
 end;
 
@@ -49,19 +49,19 @@ after insert on jobs
 for each row
 begin
     if :NEW.field_job_id is not null then
-    
+
         update salaries
         set bonuses = bonuses + 5
         where salary_id = :NEW.mechanic_id;
-        
+
         update salaries
         set current_salary = starting_salary + (starting_salary*bonuses/100)
         where salary_id = :NEW.mechanic_id;
-        
-        update salaries 
+
+        update salaries
         set increase = current_salary - starting_salary
         where salary_id = :NEW.mechanic_id;
-        
+
     end if;
 end;
 

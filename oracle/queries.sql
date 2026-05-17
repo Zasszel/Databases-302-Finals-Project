@@ -29,21 +29,21 @@ describe parts_used;
 
 ------------------------------------------------------------------------------
 
---1. Listázzuk ki a szerel?ket aktuális fizetéseikkel együtt!
+--1. Listï¿½zzuk ki a szerel?ket aktuï¿½lis fizetï¿½seikkel egyï¿½tt!
 select m.first_name, m.last_name, s.current_salary
 from mechanics m join salaries s
 on m.mechanic_id = s.salary_id;
 
---2. Listázzuk ki a szerel?k neveit és az általuk végzett munkák számát!
+--2. Listï¿½zzuk ki a szerel?k neveit ï¿½s az ï¿½ltaluk vï¿½gzett munkï¿½k szï¿½mï¿½t!
 with a as (select mechanic_id, count(job_id) as job_count
-from jobs 
+from jobs
 group by mechanic_id)
 
 select first_name || ' ' || last_name as name, a.job_count as "Jobs done"
-from mechanics m join a 
+from mechanics m join a
 on m.mechanic_id = a.mechanic_id;
 
---3. Minden évben felvett szerel?k száma és neveik.
+--3. Minden ï¿½vben felvett szerel?k szï¿½ma ï¿½s neveik.
 select extract(year from hire_date) as "Hire date", count(*) as "Count",
     listagg(first_name|| ' ' ||last_name, ', ') within group (order by last_name) as "Names"
 from mechanics
@@ -58,14 +58,14 @@ where s.current_salary = (
     from salaries
 );
 
---5.Listázzuk ki a kuncsaftok neveit és az autóikat!
-select cus.first_name ||' '||cus.last_name as name, 
+--5.Listï¿½zzuk ki a kuncsaftok neveit ï¿½s az autï¿½ikat!
+select cus.first_name ||' '||cus.last_name as name,
     listagg(c.brand_name ||' '|| c.model_name, ', ') within group (order by  c.brand_name ||' '|| c.model_name) as cars
 from customers cus join cars c
 on cus.customer_id = c.customer_id
 group by name;
 
---6. Leg?ségesebb kuncsaftok.
+--6. Leg?sï¿½gesebb kuncsaftok.
 with a as (
     select c.customer_id,
         first_name ||' '|| last_name as name, count(j.job_id) as job_count
@@ -78,19 +78,19 @@ with a as (
 )
 
 select customer_id, name, job_count
-from a 
+from a
 where job_count = (
     select max(job_count)
     from a
 );
 
---7.Kifogyott alkatrészek.
+--7.Kifogyott alkatrï¿½szek.
 select name
 from parts
 where quantity = 0;
 
 
---8. Legtöbbet rendelt alkatrészek!
+--8. Legtï¿½bbet rendelt alkatrï¿½szek!
 with a as (
     select part_id, count(order_id) as count_parts
     from parts_orders
@@ -105,7 +105,7 @@ where count_parts = (
     from a
 );
 
---9.Irassuk ki 2024 szeptemberében letett rendlések adatait!
+--9.Irassuk ki 2024 szeptemberï¿½ben letett rendlï¿½sek adatait!
 with a as (
     select po.order_id, po.part_id
     from parts_orders po join orders o
@@ -124,7 +124,7 @@ select o.order_id, o.order_date, o.distributor, o.delivery_method, b.names as "P
 from orders o join b
 on o.order_id = b.order_id;
 
---10. Leghasználtabb üzemanyagtípus!
+--10. Leghasznï¿½ltabb ï¿½zemanyagtï¿½pus!
 
 with a as (
     select fuel_type, count(fuel_type) as count
@@ -140,8 +140,8 @@ where a.count = (
     from a
 );
 
---11. Listázzuk az összes munkát és társítsuk ?ket a hozzájuk tartozó m?velettel 
---de csak akkor ha a m?velet id?igénye kevesebb mint 90 perc!
+--11. Listï¿½zzuk az ï¿½sszes munkï¿½t ï¿½s tï¿½rsï¿½tsuk ?ket a hozzï¿½juk tartozï¿½ m?velettel
+--de csak akkor ha a m?velet id?igï¿½nye kevesebb mint 90 perc!
 
 select j.*, op_description, time_required
 from jobs j
@@ -153,11 +153,11 @@ outer apply (
 )
 order by job_id;
 
---12.Havi beszámoló 2024 marciusáról
+--12.Havi beszï¿½molï¿½ 2024 marciusï¿½rï¿½l
 
 
-select  m.first_name ||' '|| m.last_name as mechanic_name, 
-    op.op_description, 
+select  m.first_name ||' '|| m.last_name as mechanic_name,
+    op.op_description,
     c.brand_name ||' '|| c.model_name ||' '|| c.fabr_year as car,
     cus.first_name ||' '|| cus.last_name as customer_name,
     sum(op.cost) as total_cost
@@ -177,7 +177,7 @@ where extract(year from cal.out_date) = 2024
 group by rollup (mechanic_name, op.op_description, car, customer_name)
 order by mechanic_name, op_description, car, customer_name;
 
---13.A hónap dolgozója (aki a legnagyobb pénzmennyiséget hozta be az aktuális hónapban).
+--13.A hï¿½nap dolgozï¿½ja (aki a legnagyobb pï¿½nzmennyisï¿½get hozta be az aktuï¿½lis hï¿½napban).
 with a as (
     select m.first_name ||' '|| m.last_name as mechanic_name, (sum(op.cost) + sum(fj.cost)) cost_sum
     from jobs j
@@ -203,8 +203,8 @@ where cost_sum = (
     from a
 );
 
---14.Bonusok és fizetés növekedések szerel?kként, 
---a fizetés növekedés szerint novekv? sorrenbe.
+--14.Bonusok ï¿½s fizetï¿½s nï¿½vekedï¿½sek szerel?kkï¿½nt,
+--a fizetï¿½s nï¿½vekedï¿½s szerint novekv? sorrenbe.
 select * from salaries;
 select m.mechanic_id as id, m.first_name ||' '|| m.last_name as name, s.bonuses, s.increase
 from mechanics m
@@ -212,7 +212,7 @@ join salaries s
 on m.mechanic_id = s.salary_id
 order by increase;
 
---15 M?veletek és az általuk használta alkatrészek!
+--15 M?veletek ï¿½s az ï¿½ltaluk hasznï¿½lta alkatrï¿½szek!
 select j.job_id ,o.op_description, p.name
 from jobs j
 join operations o
@@ -221,8 +221,8 @@ join parts_used pu
     on j.job_id = pu.job_id
 join parts p
     on pu.part_id = p.part_id;
-    
---16 Irassuk ki a CV jelzés? auókat és tulajdonosaik nevét.
+
+--16 Irassuk ki a CV jelzï¿½s? auï¿½kat ï¿½s tulajdonosaik nevï¿½t.
 select c.brand_name ||' '|| c.model_name as car,
     c.plate_number,
     cus.first_name ||' '|| cus.last_name as customer
@@ -230,22 +230,22 @@ from cars c join customers cus
     on c.customer_id = cus.customer_id
 where c.plate_number like 'CV%';
 
---17.Irjuk ki megyénként hány autó van regisztrálva de csak abban az esetben 
---ha egynél több auto van adott megyére.
-select REGEXP_SUBSTR(plate_number, '^[A-Z]{2}', 1, 1) as county, 
+--17.Irjuk ki megyï¿½nkï¿½nt hï¿½ny autï¿½ van regisztrï¿½lva de csak abban az esetben
+--ha egynï¿½l tï¿½bb auto van adott megyï¿½re.
+select REGEXP_SUBSTR(plate_number, '^[A-Z]{2}', 1, 1) as county,
     count(plate_number) as "num of cars registered there"
 from cars
 group by REGEXP_SUBSTR(plate_number, '^[A-Z]{2}', 1, 1)
 having count(plate_number) > 1;
 
---18. Irjuk ki a top három legköltségesebb m?velet leírását.
+--18. Irjuk ki a top hï¿½rom legkï¿½ltsï¿½gesebb m?velet leï¿½rï¿½sï¿½t.
 select op_description, cost
 from operations
 order by cost desc
 fetch first 3 rows only;
 
---19. Listázzuk ki azon terepmunkákat és a releváns szerel?t 
---ahol a a távolság meghaladja a 100 kilométert!
+--19. Listï¿½zzuk ki azon terepmunkï¿½kat ï¿½s a relevï¿½ns szerel?t
+--ahol a a tï¿½volsï¿½g meghaladja a 100 kilomï¿½tert!
 select  fj.*, m.*
 from field_jobs fj
 join jobs j
@@ -255,12 +255,12 @@ join mechanics m
 where distance > 100
 order by distance;
 
---20. Irassuk ki azon szerel?k kersztneveit, akik soha nem végeztek terepmunkát.
-select m.mechanic_id, m.first_name 
+--20. Irassuk ki azon szerel?k kersztneveit, akik soha nem vï¿½geztek terepmunkï¿½t.
+select m.mechanic_id, m.first_name
 from jobs j join mechanics m
     on j.mechanic_id = m.mechanic_id
 minus
-select m.mechanic_id, m.first_name 
+select m.mechanic_id, m.first_name
 from jobs j join mechanics m
     on j.mechanic_id = m.mechanic_id
 where field_job_id is not null;
@@ -278,19 +278,19 @@ order by first_name, last_name;
 
 explain plan for
 select first_name ||' '|| last_name
-from mechanics 
+from mechanics
 where first_name = 'Emma';
 ---
 explain plan for
-select * 
+select *
 from mechanics m join salaries s
 on m.mechanic_id = s.salary_id
 where s.current_salary > 2500;
 
 
 ---
-explain plan for 
-select cus.first_name ||' '||cus.last_name as name, 
+explain plan for
+select cus.first_name ||' '||cus.last_name as name,
     listagg(c.brand_name ||' '|| c.model_name, ', ') within group (order by  c.brand_name ||' '|| c.model_name) as cars
 from customers cus join cars c
 on cus.customer_id = c.customer_id
@@ -343,7 +343,7 @@ with a as (
 )
 
 select customer_id, name, job_count
-from a 
+from a
 where job_count = (
     select max(job_count)
     from a
@@ -355,11 +355,11 @@ from parts
 where quantity = 0;
 
 ----
-SELECT * 
+SELECT *
 FROM TABLE(DBMS_XPLAN.DISPLAY);
 
 ---------------------------------------------------------
---1. A szerel?k listázása JSON-al.
+--1. A szerel?k listï¿½zï¿½sa JSON-al.
 select json_object(
     'id: ' value mechanic_id,
     'name:' value first_name ||' '|| last_name,
@@ -370,10 +370,10 @@ select json_object(
 ) as mechanic_json
 from mechanics;
 
---2. Listázzuk ki a kuncsaftok neveit és az autóikat!
+--2. Listï¿½zzuk ki a kuncsaftok neveit ï¿½s az autï¿½ikat!
 select json_object(
     'name:' value cus.first_name ||' '||cus.last_name,
-    'cars:' value listagg(c.brand_name ||' '|| c.model_name, ', ') within group (order by  c.brand_name ||' '|| c.model_name) 
+    'cars:' value listagg(c.brand_name ||' '|| c.model_name, ', ') within group (order by  c.brand_name ||' '|| c.model_name)
 ) as cars_and_owners_json
 from customers cus join cars c
 on cus.customer_id = c.customer_id
