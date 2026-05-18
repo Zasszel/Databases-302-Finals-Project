@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/Basics.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/Exception_Handling.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/Lab6.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/Nested_Types.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/Packages.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/Packages2.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/Parcialis_Gyakorlat_CreateTables.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/Parcialis_Gyakorlat_Solution.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/Procedures_Functions.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/Transactions.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/Triggers.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/addSalaries.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/addSalaries_1.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/create.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/create_1.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/deletions.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/deletions_1.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/drop.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/drop_1.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/insert.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/insert_1.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/konkurencia_problema.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/queries.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/queries_1.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/roles.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/roles_1.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/tarolt_eljarasok.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/tests.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/tests_1.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/triggers_1.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/triggers_2.sql" dialect="OracleSqlPlus" />
+    <file url="file://$PROJECT_DIR$/users.sql" dialect="OracleSqlPlus" />
+  </component>
+</project>

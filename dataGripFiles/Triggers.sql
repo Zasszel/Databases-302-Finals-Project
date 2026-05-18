@@ -1,0 +1,20 @@
+-- A trigger is a named PL/SQL block stored in the database that executes automatically
+--      when a specific event occurs, such as a DML operation (INSERT, UPDATE, or DELETE)
+--
+-- Key Components:
+-- Timing: You can define a trigger to run BEFORE or AFTER the triggering event
+--
+-- Level: A trigger can be a statement-level trigger (fires once for the whole SQL statement)
+--      or a row-level trigger (fires for each individual row affected, using the FOR EACH ROW clause)
+--
+-- Correlation Names: In row-level triggers, you use :OLD to access column values before the change
+--                      and :NEW to access values after the change
+--
+-- Syntax Example:
+-- CREATE OR REPLACE TRIGGER log_sal
+-- BEFORE UPDATE OF salary ON emp FOR EACH ROW
+-- BEGIN
+--     -- This logs the old and new salary into a log table
+--     INSERT INTO log (log_id, up_date, new_sal, old_sal)
+--     VALUES (:old.employee_id, SYSDATE, :new.salary, :old.salary);
+-- END;

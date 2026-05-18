@@ -1,0 +1,4 @@
+ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE;
+
+CREATE ROLE ro_mechanic;
+CREATE ROLE ro_storekeeper;

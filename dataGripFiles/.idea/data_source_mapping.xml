@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/addSalaries_1.sql" value="9f75b20d-dfe1-4316-9a78-045bc7e2e030" />
+    <file url="file://$PROJECT_DIR$/create_1.sql" value="9f75b20d-dfe1-4316-9a78-045bc7e2e030" />
+    <file url="file://$PROJECT_DIR$/deletions_1.sql" value="9f75b20d-dfe1-4316-9a78-045bc7e2e030" />
+    <file url="file://$PROJECT_DIR$/drop_1.sql" value="9f75b20d-dfe1-4316-9a78-045bc7e2e030" />
+    <file url="file://$PROJECT_DIR$/insert_1.sql" value="9f75b20d-dfe1-4316-9a78-045bc7e2e030" />
+    <file url="file://$PROJECT_DIR$/konkurencia_problema.sql" value="9f75b20d-dfe1-4316-9a78-045bc7e2e030" />
+    <file url="file://$PROJECT_DIR$/queries_1.sql" value="9f75b20d-dfe1-4316-9a78-045bc7e2e030" />
+    <file url="file://$PROJECT_DIR$/roles_1.sql" value="9f75b20d-dfe1-4316-9a78-045bc7e2e030" />
+    <file url="file://$PROJECT_DIR$/tarolt_eljarasok.sql" value="9f75b20d-dfe1-4316-9a78-045bc7e2e030" />
+    <file url="file://$PROJECT_DIR$/tests_1.sql" value="9f75b20d-dfe1-4316-9a78-045bc7e2e030" />
+    <file url="file://$PROJECT_DIR$/triggers_2.sql" value="9f75b20d-dfe1-4316-9a78-045bc7e2e030" />
+  </component>
+</project>

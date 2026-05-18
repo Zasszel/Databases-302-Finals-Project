@@ -1,4 +1,4 @@
---print to dbms console
+-print to dbms console
 begin
     dbms_output.put_line('Hello word!');
 end;

@@ -1,0 +1,141 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using Oracle.ManagedDataAccess.Client
+@using Dapper
+@using BlazorApp.Models
+@using Radzen
+@using Radzen.Blazor
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+
+<PageTitle>Kezdőlap - Rezi Statisztikák</PageTitle>
+
+<h1>Oracle kapcsolat (Dapper)</h1>
+
+@if (isLoading)
+{
+    <div class="d-flex align-items-center mb-3">
+        <div class="spinner-border text-primary me-2" role="status"></div>
+        <span>Adatok betöltése az Oracle adatbázisból...</span>
+    </div>
+}
+else if (error != null)
+{
+    <div class="alert alert-danger">
+        <strong>Hiba történt:</strong> @error
+    </div>
+}
+else
+{
+    <div class="alert alert-success">
+        Sikeres kapcsolódás! A rezi_2025 táblában a sorok száma: <strong>@rowCount</strong>
+    </div>
+
+    <h3>Top 10 Megyei átlagpontszám (Diagram)</h3>
+
+    @if (countyStats != null && countyStats.Any())
+    {
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <RadzenChart>
+                    <RadzenColumnSeries Data="@countyStats.Take(10)" CategoryProperty="Judet" Title="Átlagpontszám" ValueProperty="Avg_Score">
+                        <RadzenSeriesDataLabels Visible="true" />
+                    </RadzenColumnSeries>
+                    <RadzenColumnOptions Radius="5" />
+                    <RadzenValueAxis>
+                        <RadzenGridLines Visible="true" />
+                        <RadzenAxisTitle Text="Pontszám" />
+                    </RadzenValueAxis>
+                    <RadzenCategoryAxis>
+                        <RadzenAxisTitle Text="Megye (Judet)" />
+                    </RadzenCategoryAxis>
+                    <RadzenLegend Visible="false" />
+                </RadzenChart>
+            </div>
+        </div>
+    }
+
+    <h3>Megyei átlagpontszámok rangsora (2023-2025)</h3>
+
+    @if (countyStats == null || !countyStats.Any())
+    {
+        <div class="alert alert-warning">Nincsenek megjeleníthető adatok a megyékhez.</div>
+    }
+    else
+    {
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Helyezés</th>
+                    <th>Megye (Judet)</th>
+                    <th>Átlagpontszám (Kerekítve)</th>
+                    <th>Vizsgázók száma (Összesen)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int rank = 1;
+                }
+                @foreach (var stat in countyStats)
+                {
+                    <tr>
+                        <td><strong>@rank.</strong></td>
+                        <td>@stat.Judet</td>
+                        <td>@stat.Avg_Score pont</td>
+                        <td>@stat.Count fő</td>
+                    </tr>
+                    rank++;
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@code {
+    private bool isLoading = true;
+    private long? rowCount;
+    private string? error;
+    private IEnumerable<CountyAverageResult>? countyStats;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDataAsync();
+    }
+
+    private async Task LoadDataAsync()
+    {
+        try
+        {
+            isLoading = true;
+            error = null;
+
+            var connStr = Configuration.GetConnectionString("Oracle");
+            using var conn = new OracleConnection(connStr);
+
+            // 1. Első lekérdezés: Sorok száma a 2025-ös táblában
+            rowCount = await conn.ExecuteScalarAsync<long>("SELECT COUNT(*) FROM REZI_2025");
+
+            // 2. Második lekérdezés: Megyei statisztikák
+            string sqlStats = @"
+                SELECT judet, round(avg(scor_simplu)) as avg_score, count(*) as count
+                FROM
+                    (SELECT scor_simplu, judet FROM rezi_2023
+                     UNION ALL
+                     SELECT scor_simplu, judet FROM rezi_2024
+                     UNION ALL
+                     SELECT scor_simplu, judet FROM rezi_2025)
+                GROUP BY judet
+                ORDER BY 2 DESC";
+
+            // A Dapper automatikusan összerendeli az oszlopokat a CountyAverageResult property-jeivel
+            countyStats = await conn.QueryAsync<CountyAverageResult>(sqlStats);
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}
