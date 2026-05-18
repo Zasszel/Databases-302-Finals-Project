@@ -1,0 +1,111 @@
+﻿@page "/"
+@inject DatabaseService DbService
+@inject UserSession Session
+@inject NavigationManager NavManager
+@rendermode InteractiveServer
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            
+            @if (Session.IsLoggedIn)
+            {
+                <div class="card shadow border-success">
+                    <div class="card-body text-center py-5">
+                        <h2 class="text-success mb-3"><span class="bi bi-check-circle-fill"></span></h2>
+                        <h4>Sikeres bejelentkezés!</h4>
+                        <p class="text-muted">Üdvözlünk a rendszerben, <b>@Session.Username</b>!</p>
+                        <hr />
+                        <p class="small">Kérlek, válassz egy funkciót a bal oldali menüből!</p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h4>Műhely Kezelő - Belépés</h4>
+                    </div>
+                    <div class="card-body">
+                        
+                        @if (!string.IsNullOrEmpty(errorMessage))
+                        {
+                            <div class="alert alert-danger text-center">@errorMessage</div>
+                        }
+
+                        <div class="mb-3">
+                            <label class="form-label">Oracle Felhasználónév</label>
+                            <input type="text" class="form-control" @bind="username" placeholder="pl. SYSTEM, user1, user2" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Jelszó</label>
+                            <input type="password" class="form-control" @bind="password" />
+                        </div>
+
+                        <button class="btn btn-primary w-100" @onclick="HandleLogin" disabled="@isLoading">
+                            @if (isLoading)
+                            {
+                                <span>Ellenőrzés...</span>
+                            }
+                            else
+                            {
+                                <span>Bejelentkezés</span>
+                            }
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private string username = "";
+    private string password = "";
+    private string errorMessage = "";
+    private bool isLoading = false;
+
+    private async Task HandleLogin()
+    {
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+        {
+            errorMessage = "Kérlek töltsd ki mindkét mezőt!";
+            return;
+        }
+
+        isLoading = true;
+        errorMessage = "";
+
+        bool isSuccess = await DbService.TestConnectionAsync(username, password);
+
+        if (isSuccess)
+        {
+            Session.Login(username, password);
+            
+            // INTELLIGENS ÁTIRÁNYÍTÁS JOGOK ALAPJÁN
+            if (Session.IsWarehouse && !Session.IsAdmin)
+            {
+                // Ha csak raktáros, mehet egyből a raktárba
+                NavManager.NavigateTo("/parts");
+            }
+            else if (Session.IsMechanic && !Session.IsAdmin)
+            {
+                // Ha szerelő, mehet a munkalapokhoz
+                NavManager.NavigateTo("/jobs");
+            }
+            else
+            {
+                // Ha Admin (SYSTEM / SZAMT14), akkor nem irányítjuk át erőszakkal.
+                // Marad a kezdőlapon, ahol most már az Üdvözlő kártya fog megjelenni,
+                // és bal oldalon nyugodtan tud böngészni a legördülő menüben!
+            }
+        }
+        else
+        {
+            errorMessage = "Sikertelen belépés! ORA-01017: Hibás felhasználónév vagy jelszó.";
+        }
+
+        isLoading = false;
+    }
+}

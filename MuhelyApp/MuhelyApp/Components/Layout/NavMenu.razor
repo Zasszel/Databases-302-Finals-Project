@@ -1,0 +1,105 @@
+﻿@inject UserSession Session
+@inject NavigationManager NavManager
+@rendermode InteractiveServer
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Autószerelő Műhely</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+
+        @if (!Session.IsLoggedIn)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Belépés
+                </NavLink>
+            </div>
+        }
+        else
+        {
+            <div class="px-3 mb-3 text-white-50 small">
+                <span>Felhasználó: <b>@Session.Username</b></span>
+            </div>
+
+            @if (Session.IsAdmin)
+            {
+                <div class="nav-item px-3">
+                    <button class="nav-link w-100 text-start bg-transparent border-0 text-white" @onclick="ToggleAdminMenu">
+                        <span class="bi bi-shield-lock-fill" aria-hidden="true"></span> 🛠️ Admin Táblák @(showAdminMenu ? "▲" : "▼")
+                    </button>
+                </div>
+
+                @if (showAdminMenu)
+                {
+                    <div class="ps-3 bg-dark rounded mx-3 my-1 py-1">
+                        <div class="nav-item px-2"><NavLink class="nav-link py-1 small text-white-50" href="tables/salaries">💰 Salaries (Fizetések)</NavLink></div>
+                        <div class="nav-item px-2"><NavLink class="nav-link py-1 small text-white-50" href="tables/mechanics">👨‍🔧 Mechanics (Szerelők)</NavLink></div>
+                        <div class="nav-item px-2"><NavLink class="nav-link py-1 small text-white-50" href="tables/customers">👥 Customers (Ügyfelek)</NavLink></div>
+                        <div class="nav-item px-2"><NavLink class="nav-link py-1 small text-white-50" href="tables/cars">🚗 Cars (Autók)</NavLink></div>
+                        <div class="nav-item px-2"><NavLink class="nav-link py-1 small text-white-50" href="tables/operations">⚙️ Operations (Műveletek)</NavLink></div>
+                        <div class="nav-item px-2"><NavLink class="nav-link py-1 small text-white-50" href="tables/orders">📦 Orders (Rendelések)</NavLink></div>
+                        <div class="nav-item px-2"><NavLink class="nav-link py-1 small text-white-50" href="tables/parts">🧩 Parts (Alkatrészek)</NavLink></div>
+                        <div class="nav-item px-2"><NavLink class="nav-link py-1 small text-white-50" href="tables/calendars">📅 Calendars (Naptár)</NavLink></div>
+                        <div class="nav-item px-2"><NavLink class="nav-link py-1 small text-white-50" href="tables/fieldjobs">🚚 Field Jobs (Kiszállások)</NavLink></div>
+                    </div>
+                }
+            }
+
+            @if (Session.IsMechanic || Session.IsAdmin)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="jobs">
+                        <span class="bi bi-wrench-nav-menu" aria-hidden="true"></span> 📋 Munkalapok (Jobs)
+                    </NavLink>
+                </div>
+            }
+
+            @if (Session.IsWarehouse || Session.IsMechanic || Session.IsAdmin)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="parts">
+                        <span class="bi bi-box-seam-nav-menu" aria-hidden="true"></span> 📦 Raktár (Parts)
+                    </NavLink>
+                </div>
+            }
+
+            <div class="nav-item px-3 mt-5">
+                <button class="btn btn-sm btn-outline-danger w-100" @onclick="HandleLogout">
+                    Kijelentkezés
+                </button>
+            </div>
+        }
+    </nav>
+</div>
+
+@code {
+    private bool showAdminMenu = false;
+
+    //Amikor a menü létrejön, feliratkozik a változásokra
+    protected override void OnInitialized()
+    {
+        Session.OnChange += StateHasChanged;
+    }
+
+    private void ToggleAdminMenu()
+    {
+        showAdminMenu = !showAdminMenu;
+    }
+
+    private void HandleLogout()
+    {
+        Session.Logout();
+        NavManager.NavigateTo("/");
+    }
+
+    public void Dispose()
+    {
+        Session.OnChange -= StateHasChanged;
+    }
+}

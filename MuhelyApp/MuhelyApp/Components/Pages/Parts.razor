@@ -1,0 +1,234 @@
+﻿@page "/parts"
+@inject DatabaseService DbService
+@inject UserSession Session
+@rendermode InteractiveServer
+
+@inject LockingService LockService
+@implements IDisposable
+
+<h3>📦 Raktárkészlet Kezelése</h3>
+
+@if (!string.IsNullOrEmpty(concurrencyErrorMessage))
+{
+    <div class="alert alert-warning alert-dismissible fade show shadow border-warning mb-4" role="alert">
+        <h5 class="alert-heading">⚠️ Egyidejűségi konfliktust észleltem!</h5>
+        <p class="mb-0">@concurrencyErrorMessage</p>
+        <button type="button" class="btn-close" @onclick="() => concurrencyErrorMessage = string.Empty"></button>
+    </div>
+}
+
+@if (Session.IsWarehouse || Session.IsAdmin)
+{
+    <div class="mb-3">
+        <button class="btn btn-success" @onclick="ToggleAddForm">
+            @(showAddForm ? "➖ Űrlap bezárása" : "➕ Új alkatrész hozzáadása")
+        </button>
+    </div>
+
+    @if (showAddForm)
+    {
+        <div class="card shadow-sm mb-4 border-success">
+            <div class="card-body">
+                <h5 class="card-title text-success">Új alkatrész rögzítése</h5>
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label">Alkatrész Neve</label>
+                        <input type="text" class="form-control" @bind="newPart.Name" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Leírás</label>
+                        <input type="text" class="form-control" @bind="newPart.Description" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Mennyiség</label>
+                        <input type="number" class="form-control" @bind="newPart.Quantity" min="0" />
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-success w-100" @onclick="SaveNewPart" disabled="@isSaving">
+                            💾 Mentés
+                        </button>
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(saveErrorMessage))
+                {
+                    <div class="alert alert-danger mt-2">@saveErrorMessage</div>
+                }
+            </div>
+        </div>
+    }
+}
+
+@if (parts == null)
+{
+    <p><em>Betöltés...</em></p>
+}
+else
+{
+    <table class="table table-striped table-hover shadow-sm align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Név</th>
+                <th>Leírás</th>
+                <th>Készlet (Db)</th>
+                @if (Session.IsWarehouse || Session.IsAdmin)
+                {
+                    <th>Műveletek</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var part in parts)
+            {
+                <tr class="@(part.Quantity < 2 ? "table-danger" : "")">
+                    <td>@part.PartId</td>
+                    <td><b>@part.Name</b></td>
+                    <td>@part.Description</td>
+                    
+                    <td>
+                        @if (editingPartId == part.PartId)
+                        {
+                            <input type="number" class="form-control form-control-sm" @bind="editingQuantity" style="width: 90px;" min="0" />
+                        }
+                        else
+                        {
+                            <span>@part.Quantity db</span>
+                        }
+                    </td>
+
+                    @if (Session.IsWarehouse || Session.IsAdmin)
+                    {
+                        <td>
+                            @if (editingPartId == part.PartId)
+                            {
+                                <button class="btn btn-sm btn-primary me-1" @onclick="() => SaveQuantityEdit(part.PartId, part.Quantity)">💾 Ok</button>
+                                <button class="btn btn-sm btn-secondary" @onclick="CancelEdit">❌ Mégse</button>
+                            }
+                            else if (LockService.IsLockedBySomeoneElse(part.PartId, Session.Username))
+                            {
+                                <span class="badge bg-secondary shadow-sm">
+                                    <i class="bi bi-lock-fill"></i> Szerkeszti: @LockService.GetLockOwner(part.PartId)
+                                </span>
+                            }
+                            else
+                            {
+                                <button class="btn btn-sm btn-outline-warning" @onclick="() => StartEdit(part)">✏️ Módosít</button>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<PartModel> parts;
+    private bool showAddForm = false;
+    private bool isSaving = false;
+    private string saveErrorMessage = "";
+    private string concurrencyErrorMessage = "";
+    private PartModel newPart = new PartModel();
+
+    // Szerkesztési állapot változói
+    private int? editingPartId = null;
+    private int editingQuantity = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        LockService.OnLockChanged += RefreshUI;
+        LockService.OnDataChanged += HandleDataChanged;
+        await LoadParts();
+    }
+
+    private void RefreshUI() => InvokeAsync(StateHasChanged);
+
+    // Ha valaki más mentett az adatbázisba, ez a háttérben frissíti a listát
+    private async void HandleDataChanged()
+    {
+        try
+        {
+            await InvokeAsync(async () =>
+            {
+                await LoadParts();
+                StateHasChanged();
+            });
+        }
+        catch { /* Háttérszál hiba elnyelése */ }
+    }
+
+    // Ha a felhasználó elnavigál az oldalról, leiratkozunk és feloldjuk a lakatot
+    public void Dispose()
+    {
+        LockService.OnLockChanged -= RefreshUI;
+        LockService.OnDataChanged -= HandleDataChanged;
+        if (editingPartId.HasValue)
+        {
+            LockService.ReleaseLock(editingPartId.Value, Session.Username);
+        }
+    }
+
+    private async Task LoadParts() => parts = await DbService.GetPartsAsync();
+
+    private void ToggleAddForm() { showAddForm = !showAddForm; saveErrorMessage = ""; }
+
+    private async Task SaveNewPart()
+    {
+        if (string.IsNullOrWhiteSpace(newPart.Name)) return;
+        isSaving = true;
+        try
+        {
+            await DbService.AddPartAsync(newPart);
+            showAddForm = false;
+            newPart = new PartModel();
+            await LoadParts();
+            LockService.NotifyDataChanged(); // Az új alkatrészről is értesítünk mindenkit
+        }
+        catch (Exception ex) { saveErrorMessage = ex.Message; }
+        finally { isSaving = false; }
+    }
+
+    // --- SZERKESZTÉS INDÍTÁSA (LAKATOLÁS) ---
+    private void StartEdit(PartModel part)
+    {
+        if (LockService.TryLockPart(part.PartId, Session.Username))
+        {
+            concurrencyErrorMessage = "";
+            editingPartId = part.PartId;
+            editingQuantity = part.Quantity;
+        }
+    }
+
+    // --- SZERKESZTÉS MEGSZAKÍTÁSA (LAKAT FELOLDÁSA) ---
+    private void CancelEdit()
+    {
+        if (editingPartId.HasValue)
+        {
+            LockService.ReleaseLock(editingPartId.Value, Session.Username);
+            editingPartId = null;
+        }
+    }
+
+    // --- INTERAKTÍV MÓDOSÍTÁS MENTÉSE ---
+    private async Task SaveQuantityEdit(int partId, int oldQuantity)
+    {
+        bool isSuccess = await DbService.UpdatePartQuantityAsync(partId, editingQuantity, oldQuantity);
+
+        // Mentés után mindenképp levesszük a lakatot
+        LockService.ReleaseLock(partId, Session.Username);
+        editingPartId = null;
+
+        if (isSuccess)
+        {
+            concurrencyErrorMessage = "";
+            await LoadParts();
+            LockService.NotifyDataChanged(); // Szólunk a többieknek, hogy töltsék be az új darabszámot
+        }
+        else
+        {
+            concurrencyErrorMessage = "Az adatokat egy másik felhasználó időközben megváltoztatta az adatbázisban!";
+            await LoadParts();
+        }
+    }
+}
+}

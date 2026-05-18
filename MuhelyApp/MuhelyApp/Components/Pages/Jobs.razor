@@ -1,0 +1,95 @@
+﻿@page "/jobs"
+@inject UserSession Session
+@inject DatabaseService DbService
+@inject LockingService LockService
+@rendermode InteractiveServer
+
+<div class="container mt-4">
+    <h3>🔧 Munkalapok és Szerviz Kezelés</h3>
+    <hr />
+
+    @if (Session.IsMechanic || Session.IsAdmin)
+    {
+        <div class="alert alert-info shadow-sm mb-4">
+            <h5>Üdv a Műhelyben, @Session.Username!</h5>
+            <p class="mb-0">Itt láthatóak az aktív javítási feladatok. A lezárás gomb egy komplex, 4 lépéses adatbázis-tranzakciót futtat le.</p>
+        </div>
+
+        @if (!string.IsNullOrEmpty(statusMessage))
+        {
+            <div class="alert @(statusMessage.Contains("Hiba") ? "alert-danger" : "alert-success") alert-dismissible fade show shadow-sm" role="alert">
+                <strong>Rendszerüzenet:</strong> @statusMessage
+            </div>
+        }
+
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Aktív Munkalap Szimuláció</h5>
+                <span class="badge bg-warning text-dark">Folyamatban (OPEN)</span>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Munkalap ID: #101</h5>
+                <p class="card-text"><strong>Ügyfél:</strong> Kovács János (ID: 1)</p>
+                <p class="card-text"><strong>Leírás:</strong> Fékbetét csere és általános szerviz</p>
+                
+                <div class="p-3 bg-light rounded border mb-3">
+                    <h6>Felhasznált erőforrások a lezáráshoz:</h6>
+                    <ul>
+                        <li><strong>Alkatrész:</strong> 1-es ID-jú alkatrészből kivonunk 2 darabot.</li>
+                        <li><strong>Számlázás:</strong> Generálunk egy 200 lejes számlát.</li>
+                        <li><strong>Ügyfél egyenleg:</strong> Megterheljük a vevőt 200 lejjel-tal.</li>
+                    </ul>
+                </div>
+
+                <button class="btn btn-success btn-lg shadow-sm" @onclick="TriggerTransaction" disabled="@isProcessing">
+                    @if (isProcessing)
+                    {
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span> Feldolgozás...</span>
+                    }
+                    else
+                    {
+                        <span>🔒 Munkalap Lezárása és Számlázása (Tranzakció)</span>
+                    }
+                </button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger shadow-sm">Nincs jogosultságod a munkalapok megtekintéséhez!</div>
+    }
+</div>
+
+@code {
+    private bool isProcessing = false;
+    private string statusMessage = "";
+
+    private async Task TriggerTransaction()
+    {
+        isProcessing = true;
+        statusMessage = "";
+
+        try
+        {
+            // Teszt paraméterek: JobId: 101, PartId: 1, Mennyiség: 2, Összeg: 45000, CustomerId: 1
+            bool success = await DbService.FinalizeJobAndCreateInvoiceAsync(101, 1, 2, 45000, 1);
+
+            if (success)
+            {
+                statusMessage = "Sikeres Tranzakció (COMMIT)! A számla elkészült, a raktárkészlet levonva, az ügyfél megterhelve, a munkalap lezárva.";
+                
+                // Élőben frissítjük a raktárosok képernyőjét is, hogy lássák a fogyást!
+                LockService.NotifyDataChanged();
+            }
+        }
+        catch (Exception ex)
+        {
+            statusMessage = ex.Message;
+        }
+        finally
+        {
+            isProcessing = false;
+        }
+    }
+}

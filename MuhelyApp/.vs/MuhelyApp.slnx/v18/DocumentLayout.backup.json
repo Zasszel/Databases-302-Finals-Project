@@ -1,0 +1,225 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|d:\\egyetem\\adatbazisok2\\databases-302-finals-project\\muhelyapp\\muhelyapp\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|solutionrelative:muhelyapp\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|d:\\egyetem\\adatbazisok2\\databases-302-finals-project\\muhelyapp\\muhelyapp\\components\\pages\\jobs.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|solutionrelative:muhelyapp\\components\\pages\\jobs.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|d:\\egyetem\\adatbazisok2\\databases-302-finals-project\\muhelyapp\\muhelyapp\\components\\pages\\parts.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|solutionrelative:muhelyapp\\components\\pages\\parts.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|d:\\egyetem\\adatbazisok2\\databases-302-finals-project\\muhelyapp\\muhelyapp\\lockingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|solutionrelative:muhelyapp\\lockingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|d:\\egyetem\\adatbazisok2\\databases-302-finals-project\\muhelyapp\\muhelyapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|solutionrelative:muhelyapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|d:\\egyetem\\adatbazisok2\\databases-302-finals-project\\muhelyapp\\muhelyapp\\usersession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|solutionrelative:muhelyapp\\usersession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|d:\\egyetem\\adatbazisok2\\databases-302-finals-project\\muhelyapp\\muhelyapp\\components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|solutionrelative:muhelyapp\\components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|d:\\egyetem\\adatbazisok2\\databases-302-finals-project\\muhelyapp\\muhelyapp\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|solutionrelative:muhelyapp\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|d:\\egyetem\\adatbazisok2\\databases-302-finals-project\\muhelyapp\\muhelyapp\\partmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|solutionrelative:muhelyapp\\partmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|d:\\egyetem\\adatbazisok2\\databases-302-finals-project\\muhelyapp\\muhelyapp\\components\\layout\\navmenu.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|solutionrelative:muhelyapp\\components\\layout\\navmenu.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|d:\\egyetem\\adatbazisok2\\databases-302-finals-project\\muhelyapp\\muhelyapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C642F7EE-CE7B-4C1D-80A2-36C903E6A01F}|MuhelyApp\\MuhelyApp.csproj|solutionrelative:muhelyapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A67A634E-21F6-46DF-8378-2629CCEF21F8}|Solution Items{A67A634E-21F6-46DF-8378-2629CCEF21F8}|D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\DatabaseService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A67A634E-21F6-46DF-8378-2629CCEF21F8}|Solution Items{A67A634E-21F6-46DF-8378-2629CCEF21F8}|solutionrelative:DatabaseService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\appsettings.json",
+              "RelativeDocumentMoniker": "MuhelyApp\\appsettings.json",
+              "ToolTip": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\appsettings.json",
+              "RelativeToolTip": "MuhelyApp\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-05-18T08:08:54.066Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LockingService.cs",
+              "DocumentMoniker": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\LockingService.cs",
+              "RelativeDocumentMoniker": "MuhelyApp\\LockingService.cs",
+              "ToolTip": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\LockingService.cs",
+              "RelativeToolTip": "MuhelyApp\\LockingService.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAQwB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T10:43:58.914Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Jobs.razor",
+              "DocumentMoniker": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\Components\\Pages\\Jobs.razor",
+              "RelativeDocumentMoniker": "MuhelyApp\\Components\\Pages\\Jobs.razor",
+              "ToolTip": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\Components\\Pages\\Jobs.razor",
+              "RelativeToolTip": "MuhelyApp\\Components\\Pages\\Jobs.razor",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAQwB0AAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-18T10:35:08.44Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Parts.razor",
+              "DocumentMoniker": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\Components\\Pages\\Parts.razor",
+              "RelativeDocumentMoniker": "MuhelyApp\\Components\\Pages\\Parts.razor",
+              "ToolTip": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\Components\\Pages\\Parts.razor",
+              "RelativeToolTip": "MuhelyApp\\Components\\Pages\\Parts.razor",
+              "ViewState": "AgIAALAAAAAAAAAAAAAswLwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-18T08:12:59.48Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Login.razor",
+              "DocumentMoniker": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\Components\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "MuhelyApp\\Components\\Pages\\Login.razor",
+              "ToolTip": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\Components\\Pages\\Login.razor",
+              "RelativeToolTip": "MuhelyApp\\Components\\Pages\\Login.razor",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAAG4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-18T08:21:34.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\Program.cs",
+              "RelativeDocumentMoniker": "MuhelyApp\\Program.cs",
+              "ToolTip": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\Program.cs",
+              "RelativeToolTip": "MuhelyApp\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T08:11:39.02Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DatabaseService.cs",
+              "DocumentMoniker": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\DatabaseService.cs",
+              "RelativeDocumentMoniker": "MuhelyApp\\DatabaseService.cs",
+              "ToolTip": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\DatabaseService.cs",
+              "RelativeToolTip": "MuhelyApp\\DatabaseService.cs",
+              "ViewState": "AgIAAKEAAAAAAAAAAAAAAMgAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T08:20:01.021Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\Components\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "MuhelyApp\\Components\\Layout\\NavMenu.razor",
+              "ToolTip": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\Components\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "MuhelyApp\\Components\\Layout\\NavMenu.razor",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAcwFMAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-18T08:34:28.038Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PartModel.cs",
+              "DocumentMoniker": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\PartModel.cs",
+              "RelativeDocumentMoniker": "MuhelyApp\\PartModel.cs",
+              "ToolTip": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\PartModel.cs",
+              "RelativeToolTip": "MuhelyApp\\PartModel.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAYwA4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T08:22:42.841Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserSession.cs",
+              "DocumentMoniker": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\UserSession.cs",
+              "RelativeDocumentMoniker": "MuhelyApp\\UserSession.cs",
+              "ToolTip": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\UserSession.cs",
+              "RelativeToolTip": "MuhelyApp\\UserSession.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAzwAoAAABdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T08:19:26.601Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "NavMenu.razor.css",
+              "DocumentMoniker": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\Components\\Layout\\NavMenu.razor.css",
+              "RelativeDocumentMoniker": "MuhelyApp\\Components\\Layout\\NavMenu.razor.css",
+              "ToolTip": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\MuhelyApp\\Components\\Layout\\NavMenu.razor.css",
+              "RelativeToolTip": "MuhelyApp\\Components\\Layout\\NavMenu.razor.css",
+              "ViewState": "AgIAACsAAAAAAAAAAAAAAE4AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-05-18T08:34:30.455Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "DatabaseService.cs",
+              "DocumentMoniker": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\DatabaseService.cs",
+              "RelativeDocumentMoniker": "DatabaseService.cs",
+              "ToolTip": "D:\\EGYETEM\\Adatbazisok2\\Databases-302-Finals-Project\\MuhelyApp\\DatabaseService.cs",
+              "RelativeToolTip": "DatabaseService.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAcwDEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T08:11:15.285Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
